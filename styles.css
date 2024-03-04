@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 body {
+  /* overflow: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +40,8 @@ body {
   display: flex;
   align-items: end;
   justify-content: flex-end;
-  font-size: 50px;
+  font-size: 3rem;
+  overflow-x: auto;
 }
 span {
   margin-right: 10px;
@@ -102,7 +104,8 @@ button {
     width: 76%;
     border-radius: 50%;
   }
-  .display {
-    font-size: 60px;
-  }
+}
+
+.size {
+  font-size: 2rem;
 }
