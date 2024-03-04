@@ -30,13 +30,17 @@ for (let i = 0; i < numbers.length; i++) {
 
 function getFirstValue(num) {
   result.innerHTML = "";
-  firstValue += num;
+  if (firstValue.length < 9) {
+    firstValue += num;
+  }
   result.innerHTML = firstValue;
 }
 
 function getSecondValue(num) {
   if (firstValue != "" && sign != "") {
-    secondValue += num;
+    if (secondValue.length < 9) {
+      secondValue += num;
+    }
     result.innerHTML = secondValue;
   }
 }
@@ -49,6 +53,7 @@ function getSign() {
     });
   }
 }
+
 getSign();
 equals.addEventListener("click", (e) => {
   result.innerHTML = "";
@@ -61,10 +66,29 @@ equals.addEventListener("click", (e) => {
   } else if (sign == "/") {
     resultVal = firstValue / secondValue;
   }
-  result.innerHTML = resultVal;
-  firstValue = resultVal;
-  secondValue = "";
-
+  if (!Number.isInteger(resultVal)) {
+    resultVal = (Math.round(resultVal * 100) / 100).toFixed(2);
+  }
+  if (resultVal > Math.pow(10, 9)) {
+    result.classList.add("size");
+  }
+  if (resultVal > Math.pow(10, 15)) {
+    alert("Input too large");
+    result.innerHTML = 0;
+    result.classList.remove("size");
+    firstValue = "";
+    isFirstValue = false;
+    secondValue = "";
+    isSecondValue = false;
+    sign = "";
+    resultVal = 0;
+    clear.innerHTML = "AC";
+  } else {
+    result.innerHTML = resultVal;
+    firstValue = resultVal;
+    secondValue = "";
+    console.log(resultVal);
+  }
 });
 
 negative.addEventListener("click", (e) => {
@@ -82,15 +106,17 @@ percent.addEventListener("click", () => {
   result.innerHTML = percentResult;
   firstValue = percentResult;
 });
+
 clear.addEventListener("click", () => {
   result.innerHTML = 0;
+  result.classList.remove("size");
   firstValue = "";
   isFirstValue = false;
   secondValue = "";
   isSecondValue = false;
   sign = "";
   resultVal = 0;
-  clear.innerHTML="AC";
+  clear.innerHTML = "AC";
 });
 
 dot.addEventListener("click", () => {
